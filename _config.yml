@@ -641,4 +641,6 @@ jsonresume:
   - interests
   - references
 
-exclude: [disabled_posts, disabled_pages]
+exclude: 
+  - disabled_posts 
+  - disabled_pages
