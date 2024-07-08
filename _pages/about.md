@@ -8,15 +8,15 @@ subtitle: >
 profile:
   align: right
   image: prof_pic.jpg
-  image_circular: false # crops the image to make it circular
-  more_info: arvi[dot]gjoka[at]nyu[dot]edu
+  image_circular: true # crops the image to make it circular
+  more_info: arvi.gjoka@nyu.edu
 
 news: false # includes a list of news items
 selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-I am a fifth year PhD student at Courant Institute, New York University, where I am co-advised by Daniele Panozzo and Denis Zorin. My research interests include robust differentiable simulation, inverse design and soft robotics.
+I am a fifth year PhD student at Courant Institute, NYU, where I am co-advised by Daniele Panozzo and Denis Zorin. My research interests include robust **differentiable simulation, inverse design and soft robotics**. I am particularly interested in fabrication methods, both as a verification of simulation and as an end goal of optimization.
  <!-- I am particularly focused in robust methods that are demonstrable via fabrication. -->
 
 Link to my [CV]({{ site.url }}/assets/pdf/example_pdf.pdf).
