@@ -640,3 +640,5 @@ jsonresume:
   - languages
   - interests
   - references
+
+exclude: [disabled_posts, disabled_pages]
