@@ -3,7 +3,6 @@ layout: post
 title: Cascaded Shape Optimization using PolyFEM
 date: 2024-07-07 11:12:00-0400
 description: A tutorial for setting up shape optimization of pneumatic robots
-tags: formatting math
 categories: optimization
 related_posts: false
 ---
