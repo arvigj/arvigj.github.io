@@ -19,7 +19,7 @@ social: true # includes social icons at the bottom of the page
 I am a fifth year PhD student at Courant Institute, NYU, where I am co-advised by Daniele Panozzo and Denis Zorin. My research interests include robust **differentiable simulation, inverse design and soft robotics**. I am particularly interested in fabrication methods, both as a verification of simulation and as an end goal of optimization.
  <!-- I am particularly focused in robust methods that are demonstrable via fabrication. -->
 
-Link to my [CV]({{ site.url }}/assets/pdf/example_pdf.pdf).
+Link to my [resume]({{ site.url }}/assets/pdf/resume.pdf).
 
 <span style="color:#cb4b16">**I am currently looking for post-doc and industry positions starting in Fall 2025, please reach out if interested!**</span>
 
