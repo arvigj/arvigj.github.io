@@ -19,11 +19,13 @@ Readers should take a look at the [PolyFEM docs](https://polyfem.github.io/tutor
 
 ### Mesh
 
-A finite element simulation requires a volumetric mesh. This can be created from a surface mesh using [fTetWild](https://github.com/wildmeshing/fTetWild), which exposes a lot of control over mesh quality. Alternatively, if designed in CAD, volumetric meshes are directly available.
+A finite element simulation requires a volumetric mesh. This can be created from a surface mesh using [fTetWild](https://github.com/wildmeshing/fTetWild), which exposes a lot of control over mesh quality and is very robust. One drawback is that the volumetric mesh surface will be within an epsilon tolerance of the input surface mesh (epsilon can be configured, but the algorithm will take longer to run if epsilon is small). This is only really a problem when designing object with flat features, because after meshing they will no longer be truly flat. In these cases we recommend using [TetGen]() if the object is simple.
+
+Alternatively, if designed in CAD, volumetric meshes are directly available.
 
 ### Surface selections
 
-We provide a utility to select surface based on bounding volumes. Given a volumetric mesh and surface meshes bounding surfaces of interest, our utility in `setup_scene_3d/setup_3d.cpp` computes the surface selections and assigns distinct ids for use in the simulation. The output is a `.txt` file mapping surface triangles to boundary ids.
+The easiest way to select surfaces is by using the built in selection tools of PolyFEM, whereby you can specify surfaces bounded by geometric primitives (box, sphere). When dealing with more complicated geometries, one might want to select two sides of a thin wall, in which case these don't provide the necessary granularity. For this, we designed a utility which takes in the volumetric mesh and (watertight) surface meshes enclosing surfaces of interest and creates a single file of relevant surface selections. This can be found in `pneumatic-actuator-design/setup_scene_3d` and compiled as you would any cmake project. The benefit of this system is that when the objects are designed originally, whether in CAD or a modelling software like Blender, one can take the surface parts, scale them up to enclose the surfaces of interest and export these. The selections will then closely follow the surface and can be very precise. The output of this utility is a `.txt` file mapping surface triangles to boundary ids, which can be directly loaded into PolyFEM. Please see the README in the repository for how to use it.
 
 ### Boundary conditions
 
@@ -42,7 +44,7 @@ Once you've marked the surface selections and specified them in the json, you ca
 }
 ```
 
-Dirichlet boundary conditions require a specification of a displacement vector $$[x, y, z]$$ whereas pressure boundary conditions only require a pressure scalar that is applied normal to the surface $$p \, \hat{n}$$. PolyFEM also accepts functions of $$x, y, z, t$$ as boundary condition values, allowing pressure to be varied over time as the linear ramp `min(-4000 * t, -4000)`. There are other functions available and boundary conditions can also be specified per timestep (see worm example).
+Dirichlet boundary conditions require a specification of a displacement vector $$[x, y, z]$$ whereas pressure boundary conditions only require a pressure scalar that is applied normal to the surface $$p \, \hat{n}$$ (the convention used is that negative values represent incedent pressure). PolyFEM also accepts functions of $$x, y, z, t$$ as boundary condition values, allowing pressure to be varied over time as the linear ramp `min(-4000 * t, -4000)`. There are other functions available and boundary conditions can also be specified per timestep (see worm example), but PolyFEM lacks more robust specification for control.
 
 **Important Note About Simulation:** For mathematical reasons, the boundary loop of a surface with applied pressure must be either held constant with Dirichlet b.c. or the whole surface must be closed.
 
@@ -82,13 +84,14 @@ Once the simulation is setup, setting up the optimization requires specifying:
             ...
         }
     }
-
     ```
     * `collision_barrier` -- Since we're using a quadratic barrier in our `layer_thickness` objective, we might want to add a "hard" constraint to prevent surfaces going through one another. If we keep the support of this objective small, we can ensure that the optimization does not reach an invalid state while preventing this objective from really contributing to the energy. This objective is not crucial to the optimization and can be left out.
 
+Setting weights for each objective is nontrivial and especially with multiple competing objectives, may require a few rounds of weight tuning.
+
 ## Cascaded Optimization
 
-At this point, you can add the new optimization info to the `OPTIMIZATIONS` dict in `multigrid_optimization.py`. Using a key `<example_key>`, the necessary fields are:
+At this point, you can add the new optimization info to the `OPTIMIZATIONS` dict in `cascaded_optimization.py`. Using a key `<example_key>`, the necessary fields are:
 
 `base_path`: The base directory for the optimization files, where the results will be stored.
 
@@ -96,7 +99,7 @@ At this point, you can add the new optimization info to the `OPTIMIZATIONS` dict
 
 `run_path`: The filename of the optimization json.
 
-`num_control_points`: For each of the surfaces being optimized, this specified the degrees of freedom for each optimization step. It is zero indexed starting with the first parameter in the optimization json.
+`num_control_points`: For each of the surfaces being optimized, this specified the degrees of freedom for each optimization step. It is zero indexed starting with the first parameter in the optimization json. Typically, you can start this with a low number that translates the shape first, then double the degrees of freedom iteratively.
 
 `num_iters`: Specifies the number of iterations for each optimization step.
 
@@ -106,7 +109,9 @@ At this point, you can add the new optimization info to the `OPTIMIZATIONS` dict
 
 `threads`: Number of threads that the forward simulation is allowed.
 
-The optimization can then be executed by the following command
+The optimization can then be executed by the following command:
 
-`python multigrid_optimization.py <example_key> <run_path> <polyfem_build_dir> <mmg_build_dir> <absolute_path> L-BFGS`
+`python cascaded_optimization.py <example_key> <polyfem_build_dir> <mmg_build_dir> `
+
+This will run the optimization and save the results in the current working directory.
 
