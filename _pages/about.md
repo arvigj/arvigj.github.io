@@ -3,7 +3,7 @@ layout: about
 title: about
 permalink: /
 subtitle: >
-  PhD Student, Courant Institute, New York University 
+  Research Engineer, <a href="https://www.foundationegi.com/">Foundation EGI</a>
 
 profile:
   align: right
@@ -16,11 +16,13 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-I am a final year PhD student at Courant Institute, NYU, where I am co-advised by Daniele Panozzo and Denis Zorin. My thesis is *Computational Design through Differentiable Elastodynamic Simulation, Parametrized by Geometric Techniques, for Applications in Soft Robotics*. During my PhD, my research has revolved around building differentiable Finite Element based optimization methodologies for targeting computational design through inverse problems and been published mainly in SIGGRAPH. Additionally, I have done some early work exploring and benchmarking Scientific Machine Learning techniques on dynamical systems (NeurIPS). In the past few years, I have interned at Disney Research Zurich and nTop. 
+I am a Research Engineer at [Foundation EGI](https://www.foundationegi.com/), where I work on problems at the intersection of large language models and geometry processing research.
 
-I am an active contributor to [PolyFEM](https://github.com/polyfem/polyfem), a state-of-the-art differentiable FEM simulator that we are evolving to offer novel techniques in simulation and optimization. I am also particularly interested in fabrication methods (additive manufacturing, silicone molding), both as a verification of simulation and as a forcing function to developing new computational techniques. 
+I received my PhD from the Courant Institute, NYU, where I was a member of the [Geometric Computing Lab](https://cims.nyu.edu/gcl/), co-advised by Daniele Panozzo and Denis Zorin. My thesis, *Computational Design through Differentiable Elastodynamic Simulation, Parametrized by Geometric Techniques, for Applications in Soft Robotics*, focused on differentiable Finite Element based optimization methods for computational design through inverse problems, published mainly at SIGGRAPH and in ACM Transactions on Graphics. I also did early work exploring and benchmarking Scientific Machine Learning techniques on dynamical systems (NeurIPS). During my PhD, I interned at Disney Research Zurich and nTop.
 
-Prior to this, I graduated with a BA in Physics and Computer Science at NYU and was a software engineer at Google.
+I am particularly interested in fabrication methods (additive manufacturing, silicone molding), both as a verification of simulation and as a forcing function for developing new computational techniques.
+
+Before my PhD, I graduated with a BA in Physics and Computer Science at NYU and was a software engineer at Google.
 
 <!-- Link to my [resume]({{ site.url }}/assets/pdf/resume.pdf). -->
 

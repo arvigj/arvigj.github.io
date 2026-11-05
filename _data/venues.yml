@@ -7,3 +7,30 @@
 
 "Vision":
   color: "#009f36"
+
+"SIGGRAPH":
+  url: https://www.siggraph.org/
+  color: "#1f4e8c"
+
+"SIGGRAPH Asia":
+  url: https://asia.siggraph.org/
+  color: "#1f4e8c"
+
+"TOG":
+  url: https://dl.acm.org/journal/tog
+  color: "#6a3d9a"
+
+"NeurIPS":
+  url: https://neurips.cc/
+  color: "#8c1f4e"
+
+"CHI":
+  url: https://chi.acm.org/
+  color: "#2e7d32"
+
+"CVPR-W":
+  url: https://sites.google.com/view/fgvc7
+  color: "#c26a00"
+
+"PhD Thesis":
+  color: "#57068c"
