@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://arvigj.github.io/sitemap.xml
+Sitemap: https://www.arvigjoka.com/sitemap.xml
