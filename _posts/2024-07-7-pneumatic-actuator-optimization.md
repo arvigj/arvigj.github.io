@@ -9,7 +9,8 @@ related_posts: false
 
 Cascaded Shape Optimization using PolyFEM (Draft In Progress)
 ==================
-***A tutorial for setting up shape optimization of pneumatic robots, with [full examples](https://github.com/arvigj/pneumatic-actuator-design)***
+
+_**A tutorial for setting up shape optimization of pneumatic robots, with [full examples](https://github.com/arvigj/pneumatic-actuator-design)**_
 
 In this tutorial, I'll be outlining how to setup the shape optimization from the paper ['Soft Pneumatic Actuator Design using Differentiable Simulation'](https://cims.nyu.edu/gcl/papers/2024-pneumatic.pdf). I'll be assuming familiarity with the paper, including the finite element method and optimization in general. For a background into these topics, there will be a blog post in the future. We will be using the differentiable finite element simulator [PolyFEM](https://github.com/polyfem/polyfem), which has support for high order basis, a multitude of material models, physical energies and state-of-the-art contact/friction ([IPC](https://github.com/ipc-sim/ipc-toolkit)). The cascading algorithm is implemented in Python and can be found [with the configuration files](https://github.com/arvigj/pneumatic-actuator-design). [MMG](https://www.mmgtools.org) is also required for interior remeshing.
 
@@ -19,7 +20,7 @@ Readers should take a look at the [PolyFEM docs](https://polyfem.github.io/tutor
 
 ### Mesh
 
-A finite element simulation requires a volumetric mesh. This can be created from a surface mesh using [fTetWild](https://github.com/wildmeshing/fTetWild), which exposes a lot of control over mesh quality and is very robust. One drawback is that the volumetric mesh surface will be within an epsilon tolerance of the input surface mesh (epsilon can be configured, but the algorithm will take longer to run if epsilon is small). This is only really a problem when designing object with flat features, because after meshing they will no longer be truly flat. In these cases we recommend using [TetGen]() if the object is simple.
+A finite element simulation requires a volumetric mesh. This can be created from a surface mesh using [fTetWild](https://github.com/wildmeshing/fTetWild), which exposes a lot of control over mesh quality and is very robust. One drawback is that the volumetric mesh surface will be within an epsilon tolerance of the input surface mesh (epsilon can be configured, but the algorithm will take longer to run if epsilon is small). This is only really a problem when designing object with flat features, because after meshing they will no longer be truly flat. In these cases we recommend using [TetGen](https://wias-berlin.de/software/tetgen/) if the object is simple.
 
 Alternatively, if designed in CAD, volumetric meshes are directly available.
 
@@ -51,41 +52,42 @@ Dirichlet boundary conditions require a specification of a displacement vector $
 ## Optimization Setup
 
 Once the simulation is setup, setting up the optimization requires specifying:
-1. The parameters being optimized and their starting values. 
+
+1. The parameters being optimized and their starting values.
 2. The parametrizations mapping the parameters to simulation variables, i.e. quantities that the simulation directly uses. In the case of simply optimizing vertex positions, the parametrization is the identity map.
 3. The optimization objectives, which can be a list of summed functionals. While there are many of them and new ones are constantly added in PolyFEM, the ones we will detail are:
-    * `mesh-target` -- 
-    ```
-    {
-        "type": "mesh-target",
-        "state": 0,
-        "surface_selection": [
-            4
-        ],
-        "mesh_path": "cylinder_smaller_target_v2.obj",
-        "delta": 0.001
-    }
-    ```
-    * `log_contact_force_norm`
-    * `layer_thickness`
-    * `transient_integral` -- This objective is needed to wrap all of our other objectives, which are effectively static objectives (for a given displacement at time t). Through this objective, one can specify a timestep to evaluate the static objectives or evaluate them over the course of the simulation. The syntax looks as follows, with the static objective being surface matching to a mesh evaluated at time steps 53 and 54:
-    ```
-    {
-        "type": "transient_integral",
-        "weight": -1e4,
-        "integral_type": "steps",
-        "steps": [
-            53,
-            54
-        ],
-        "state": 0,
-        "static_objective": {
-            "type": "mesh-target",
-            ...
-        }
-    }
-    ```
-    * `collision_barrier` -- Since we're using a quadratic barrier in our `layer_thickness` objective, we might want to add a "hard" constraint to prevent surfaces going through one another. If we keep the support of this objective small, we can ensure that the optimization does not reach an invalid state while preventing this objective from really contributing to the energy. This objective is not crucial to the optimization and can be left out.
+   - `mesh-target` --
+   ```
+   {
+       "type": "mesh-target",
+       "state": 0,
+       "surface_selection": [
+           4
+       ],
+       "mesh_path": "cylinder_smaller_target_v2.obj",
+       "delta": 0.001
+   }
+   ```
+   - `log_contact_force_norm`
+   - `layer_thickness`
+   - `transient_integral` -- This objective is needed to wrap all of our other objectives, which are effectively static objectives (for a given displacement at time t). Through this objective, one can specify a timestep to evaluate the static objectives or evaluate them over the course of the simulation. The syntax looks as follows, with the static objective being surface matching to a mesh evaluated at time steps 53 and 54:
+   ```
+   {
+       "type": "transient_integral",
+       "weight": -1e4,
+       "integral_type": "steps",
+       "steps": [
+           53,
+           54
+       ],
+       "state": 0,
+       "static_objective": {
+           "type": "mesh-target",
+           ...
+       }
+   }
+   ```
+   - `collision_barrier` -- Since we're using a quadratic barrier in our `layer_thickness` objective, we might want to add a "hard" constraint to prevent surfaces going through one another. If we keep the support of this objective small, we can ensure that the optimization does not reach an invalid state while preventing this objective from really contributing to the energy. This objective is not crucial to the optimization and can be left out.
 
 Setting weights for each objective is nontrivial and especially with multiple competing objectives, may require a few rounds of weight tuning.
 
@@ -114,4 +116,3 @@ The optimization can then be executed by the following command:
 `python cascaded_optimization.py <example_key> <polyfem_build_dir> <mmg_build_dir> `
 
 This will run the optimization and save the results in the current working directory.
-

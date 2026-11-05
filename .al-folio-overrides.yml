@@ -1,0 +1,10 @@
+---
+version: 1
+overrides:
+  _includes/plugins/al_analytics_scripts.liquid:
+    owner: al_folio_core
+    gem_version: 1.0.15
+    upstream_path: _includes/plugins/al_analytics_scripts.liquid
+    upstream_sha256: 49c4fa14ad2c1661585a569b79d9897b79c0f4ba7e2278b6c22ed1c0b95da116
+    local_sha256: e72f04b9fa5380fe7e5a9570c5fbd2eef581e91f1898160052d113e3a1d44123
+    acknowledged_at: "2026-11-05"
