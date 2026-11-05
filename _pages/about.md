@@ -23,15 +23,11 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-I am a Research Engineer at [Foundation EGI](https://www.foundationegi.com/), where I work on problems at the intersection of large language models and geometry processing research.
+I am a Research Engineer at [Foundation EGI](https://www.foundationegi.com/), where I apply my background in simulation and geometry processing to help large language models understand and work with large engineering assemblies.
 
-I received my PhD from the Courant Institute, NYU, where I was a member of the [Geometric Computing Lab](https://cims.nyu.edu/gcl/), co-advised by Daniele Panozzo and Denis Zorin. My research asked a simple question: instead of designing soft, flexible objects by trial and error, can a computer design them for us? My approach was to build physics simulations that not only predict how an object will bend, stretch and collide, but can also be run "in reverse" to work out what shape or material will produce a desired behavior.
+I received my PhD from the Courant Institute at NYU, where I was advised by [Daniele Panozzo](https://cs.nyu.edu/~panozzo/) and [Denis Zorin](https://cs.nyu.edu/~dzorin/) in the [Geometric Computing Lab](https://cims.nyu.edu/gcl/). My research focused on the computational design of deformable objects in contact, from soft robots to stretchable sensors. To do this, I used robust, differentiable simulation based on the finite element method and [Incremental Potential Contact (IPC)](https://ipc-sim.github.io/), implemented on top of [PolyFEM](https://github.com/polyfem/polyfem). This work was published at SIGGRAPH and in ACM Transactions on Graphics. I also fabricated many of these designs, which validated the simulations and often revealed new computational problems. During my PhD, I interned at Disney Research Zurich and nTop.
 
-My work builds on [PolyFEM](https://github.com/polyfem/polyfem), an open-source simulator for deformable objects in contact, which we extended so it can automatically tune an object's shape, material or starting motion to hit a target ([TOG 2024](https://doi.org/10.1145/3657648)). I then used it to design soft robots powered by air. Given the pose you want a robot to strike or the force you want it to apply, the method shapes the hollow chambers inside it to make that happen ([SIGGRAPH 2024](https://doi.org/10.1145/3641519.3657467)). Most recently, I applied the same ideas to stretchable sensors that wrap around an object and detect how it's bending. Here the computer designs the sensor's layout so it can tell different poses apart, with little of the usual tedious calibration ([TOG 2025](https://doi.org/10.1145/3763274)).
-
-I also enjoy building things. I 3D-printed and molded silicone prototypes of these designs to check that the simulations hold up in the real world, which often pointed to new problems worth solving. Earlier in my PhD, I worked on benchmarking machine learning methods for simulating physical systems ([NeurIPS 2021](https://openreview.net/forum?id=pY9MHwmrymR)). Along the way, I interned at Disney Research Zurich and nTop.
-
-Before my PhD, I graduated with a BA in Physics and Computer Science at NYU. I was also a software engineer at Google, where I worked on vision pipelines for long-tailed problems.
+Before my PhD, I earned a BA in Physics and Computer Science from NYU and worked as a software engineer at Google on vision pipelines for long-tailed problems.
 
 <!-- Link to my [resume]({{ site.url }}/assets/pdf/resume.pdf). -->
 
